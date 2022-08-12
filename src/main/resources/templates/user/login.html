@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 테일윈드 불러오기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css">
+<!-- 폰트어썸 불러오기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<!-- 데이지UI 불러오기 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@2.22.0/dist/full.css" type="text/css" />
+<link rel="stylesheet" href="/common/common.css">
+<head>
+    <meta charset="UTF-8">
+    <!--    <div th:replace="common/darkMod :: darkFragment"></div>-->
+    <title>로그인</title>
+</head>
+
+<body>
+<!-- 로그인 폼 시작 -->
+<section class="h-screen">
+    <div class="con h-full text-gray-800">
+        <div
+                class="flex justify-center items-center flex-wrap h-full"
+        >
+            <div>
+                <form th:action="@{|/user/doLogin|}" th:object="${loginForm}" method="POST" class="w-96">
+                    <div th:replace="/common/errorForm :: formErrorsFragment"></div>
+                    <!-- Email input -->
+                    <div class="mb-6">
+                        <input
+                                type="email"
+                                name="email"
+                                class="flex w-full px-4 py-2 mr-3 text-xl text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded focus:text-gray-700"
+                                placeholder="Email address"
+                                th:value="${loginForm.email}"
+                        />
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="mb-6">
+                        <input
+                                type="password"
+                                name="password"
+                                class="flex w-full px-4 py-2 mr-3 text-xl text-gray-700 transition ease-in-out bg-white border border-gray-300 border-solid rounded focus:text-gray-700"
+                                placeholder="Password"
+                        />
+                    </div>
+
+                    <div class="flex justify-between items-center mb-6">
+                        <div class="form-group form-check">
+                            <a th:href="@{|/user/findEmail|}">이메일 찾기</a>
+                        </div>
+                        <a th:href="@{|/user/findPw|}">비밀번호 찾기</a>
+                    </div>
+
+                    <div class="text-right">
+                        <input
+                                type="submit"
+                                class="btn btn-active inline-block px-7 py-3 w-full bg-black text-white font-medium text-sm rounded focus:outline-none" value = "로그인"/>
+                        <p class="text-sm font-semibold mt-2 pt-1 mb-0">
+                            계정이 없으신가요?
+                            <a
+                                    th:href="@{|/user/join|}"
+                                    class="text-red-600 hover:text-red-700 focus:text-red-700 transition duration-200 ease-in-out"
+                            >회원가입</a
+                            >
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!-- 테일윈드 불러오기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.3/tailwind.min.css">
+<!-- 폰트어썸 불러오기 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<!-- 데이지UI 불러오기 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@2.22.0/dist/full.css" type="text/css"/>
+<link rel="stylesheet" href="/common/common.css">
+<head>
+    <meta charset="UTF-8">
+    <title>비밀번호 찾기</title>
+</head>
+<body>
+<div class="max-w-screen-lg mx-auto h-screen">
+    <div class="px-6 h-full text-gray-800">
+        <div class="flex justify-center items-center flex-wrap h-full">
+            <div>
+                <div class="mt-5 mb-2 text-xl font-bold text-center">
+                    비밀번호 찾기
+                </div>
+                <div th:if="${findPwForm.isSend != 'send' && findPwForm.isSuccess != 'success'}">
+                    <form th:action="@{|/findPwMail|}" method="post">
+                        <!-- Email input -->
+                        <div>
+                            <div class="mb-3 flex">
+                                <input
+                                        type="email"
+                                        name="email"
+                                        class="form-control block w-2/3 px-4 py-2 mr-1 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                        placeholder="Email"
+                                />
+
+                                <input
+                                        type="submit"
+                                        class="w-1/3 py-3 bg-black text-white font-medium text-sm rounded box-border btn"
+                                        value="인증번호 발송"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div th:if="${findPwForm.isSend == 'send' && findPwForm.isSuccess != 'success'}">
+                    <form th:action="@{|/findPwMail|}" method="post">
+                        <!-- Email input -->
+                        <div>
+                            <div class="mb-3 flex">
+                                <input
+                                        type="email"
+                                        name="email"
+                                        th:value="${findPwForm.email}"
+                                        class="form-control block w-2/3 px-4 py-2 mr-1 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                        placeholder="Email"
+                                        readonly
+                                />
+
+                                <input
+                                        type="submit"
+                                        class="w-1/3 py-3 bg-black text-white font-medium text-sm rounded box-border btn"
+                                        value="재발송"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div th:if="${findPwForm.isSuccess != 'success'}">
+                    <form th:action="@{|/confirmPw|}" method="post">
+                        <input type="hidden" name="email" th:value="${findPwForm.email}">
+                        <input type="hidden" name="authentication" th:value="${findPwForm.authentication}">
+                        <!-- Name input -->
+                        <div class="mb-3">
+                            <input
+                                    type="text"
+                                    name="confirmAuthentication"
+                                    class="form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:border-blue-600 focus:outline-none"
+                                    placeholder="인증번호 입력"
+                            />
+                        </div>
+
+                        <div class="flex w-full h-auto justify-between">
+                            <input
+                                    type="submit"
+                                    class="w-full py-3 bg-black text-white font-medium text-sm rounded box-border btn"
+                                    value="확인">
+                            </input>
+                        </div>
+                    </form>
+                </div>
+                <div th:if="${findPwForm.isSuccess == 'success'}">
+                        <!-- Name input -->
+                        <div class="mb-3 px-4 py-2">
+                            비밀번호 변경이 완료되었습니다.
+                        </div>
+
+                        <div class="flex w-full h-auto justify-between">
+                            <button class="w-full py-3 bg-black text-white font-medium text-sm rounded box-border btn">
+                                <a th:href="@{|/user/login|}">로그인 페이지로 이동</a>
+                            </button>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script layout:fragment="script" type='text/javascript'>
+    history.replaceState({}, null, location.pathname);
+</script>
+</html>
