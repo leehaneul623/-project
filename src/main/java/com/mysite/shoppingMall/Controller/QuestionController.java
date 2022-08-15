@@ -5,13 +5,11 @@ import com.mysite.shoppingMall.Repository.UserRepository;
 import com.mysite.shoppingMall.Service.QuestionService;
 import com.mysite.shoppingMall.Ut.Ut;
 import com.mysite.shoppingMall.Vo.IsLogined;
-import com.mysite.shoppingMall.Vo.MallUser;
 import com.mysite.shoppingMall.Vo.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -28,9 +26,16 @@ public class QuestionController {
     private UserRepository userRepository;
 
     //C 생성 ==============================================
-    @RequestMapping("/doWrite")
+    @GetMapping("/doWrite")
     public String doWrite(){
         return "QnA/write.html";
+    }
+
+    @PostMapping("/doWrite")
+    public String doWrite(@RequestParam String subject, @RequestParam String content, Model model){
+        model.addAttribute("questionList");
+
+        return "redirect:/question/list";
     }
 
 
