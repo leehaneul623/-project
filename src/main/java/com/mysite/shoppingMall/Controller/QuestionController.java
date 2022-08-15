@@ -1,5 +1,6 @@
 package com.mysite.shoppingMall.Controller;
 
+import com.mysite.shoppingMall.Form.QuestionForm;
 import com.mysite.shoppingMall.Repository.QuestionRepository;
 import com.mysite.shoppingMall.Repository.UserRepository;
 import com.mysite.shoppingMall.Service.QuestionService;
@@ -9,9 +10,11 @@ import com.mysite.shoppingMall.Vo.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,13 +30,16 @@ public class QuestionController {
 
     //C 생성 ==============================================
     @GetMapping("/doWrite")
-    public String doWrite(){
+    public String doWrite(QuestionForm questionForm){
         return "QnA/write.html";
     }
 
     @PostMapping("/doWrite")
-    public String doWrite(@RequestParam String subject, @RequestParam String content, Model model){
-        model.addAttribute("questionList");
+    public String doWrite(@Valid QuestionForm questionForm, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "QuestionForm";
+        }
+        this.questionService.doWrite(questionForm.getSubject(), questionForm.getContent());
 
         return "redirect:/question/list";
     }

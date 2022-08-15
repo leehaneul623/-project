@@ -5,6 +5,7 @@ import com.mysite.shoppingMall.Vo.Question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -17,5 +18,13 @@ public class QuestionService {
         List<Question> questionList = questionRepository.findByMallUserId(userId);
         System.out.println(questionList);
         return questionList;
+    }
+
+    public void doWrite(String subject, String content){
+        Question q = new Question();
+        q.setSubject(subject);
+        q.setContent(content);
+        q.setCreateDate(LocalDateTime.now());
+        this.questionRepository.save(q);
     }
 }
