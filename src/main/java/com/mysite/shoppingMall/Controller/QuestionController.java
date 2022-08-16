@@ -35,11 +35,11 @@ public class QuestionController {
     }
 
     @PostMapping("/doWrite")
-    public String doWrite(@Valid QuestionForm questionForm, BindingResult bindingResult){
+    public String doWrite(@Valid QuestionForm questionForm, BindingResult bindingResult, HttpSession session){
         if(bindingResult.hasErrors()){
-            return "QuestionForm";
+            return "QnA/write.html";
         }
-        this.questionService.doWrite(questionForm.getSubject(), questionForm.getContent());
+        this.questionService.doWrite(questionForm.getSubject(), questionForm.getContent(), session);
 
         return "redirect:/question/list";
     }
