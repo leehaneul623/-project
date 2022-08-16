@@ -37,4 +37,5 @@ public class QuestionService {
         q.setMallUser(mallUser);
         this.questionRepository.save(q);
     }
+
 }

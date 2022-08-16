@@ -9,8 +9,7 @@
 <main layout:fragment="main">
     <section class="container w-full mx-auto h-full">
         <!-- 상단바 -->
-
-
+        <!-- id 증가 -->
             <div class="container max-w-screen-lg mx-auto">
                 <div class="text-4xl font-bold mt-5 mb-2 text-center">Q & A</div>
             </div>
@@ -33,10 +32,10 @@
                 <tbody class="justify-between">
 
                 <tr th:each="question : ${questionList}" class="">
-                    <th class="px-4 py-3">게시글번호</th>
-                    <th th:text="${question.mallUser.name}" class="px-4 py-3">작성자이름</th>
-                    <th th:text="${question.subject}" class="px-4 py-3"><a href="">제목</a></th>
-                    <th th:text="${question.createDate}" class="px-4 py-3">regDate</th>
+                    <th class="px-4 py-3">아이디 넣어주세요.</th>
+                    <th th:text="${question.mallUser.name}" class="px-4 py-3"></th>
+                    <th th:text="${question.subject}" class="px-4 py-3"><a href=""></a></th>
+                    <th th:text="${(question.createDate).toString().substring(0,10)}" class="px-4 py-3"></th>
                 </tr>
 
                 </tbody>
