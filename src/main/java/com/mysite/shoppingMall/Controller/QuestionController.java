@@ -8,6 +8,7 @@ import com.mysite.shoppingMall.Ut.Ut;
 import com.mysite.shoppingMall.Vo.IsLogined;
 import com.mysite.shoppingMall.Vo.Question;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,14 +48,11 @@ public class QuestionController {
 
     //R 읽기 ==============================================
     @RequestMapping("/list")
-    public String showQuestion(HttpSession httpSession, Model model){
-        IsLogined isLogined = Ut.isLogined(httpSession);
-        List<Question> questionList = this.questionService.getList(isLogined.getUserId());
+    public String showQuestion(Model model, @RequestParam(value="page", defaultValue="0") int page){
+        Page<Question> paging = this.questionService.getList(page);
 
-
-        model.addAttribute("questionList", questionList);
+        model.addAttribute("paging", paging);
         return "QnA/qna.html";
-
     }
 
 

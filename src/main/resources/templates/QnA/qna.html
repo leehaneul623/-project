@@ -31,8 +31,8 @@
                 </thead>
                 <tbody class="justify-between">
 
-                <tr th:each="question : ${questionList}" class="">
-                    <th class="px-4 py-3">아이디 넣어주세요.</th>
+                <tr th:each="question, loop : ${paging}" class="">
+                    <th th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}" class="px-4 py-3"></th>
                     <th th:text="${question.mallUser.name}" class="px-4 py-3"></th>
                     <th th:text="${question.subject}" class="px-4 py-3"><a href=""></a></th>
                     <th th:text="${(question.createDate).toString().substring(0,10)}" class="px-4 py-3"></th>

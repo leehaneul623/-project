@@ -7,10 +7,15 @@ import com.mysite.shoppingMall.Vo.IsLogined;
 import com.mysite.shoppingMall.Vo.MallUser;
 import com.mysite.shoppingMall.Vo.Question;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,10 +26,12 @@ public class QuestionService {
 
     private final UserRepository userRepository;
 
-    public List<Question> getList(Integer userId){
-        List<Question> questionList = questionRepository.findByMallUserId(userId);
-        System.out.println(questionList);
-        return questionList;
+    public Page<Question> getList(Integer page){
+        List<Sort.Order> sorts = new ArrayList<>();
+        sorts.add(Sort.Order.desc("createDate"));
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts));
+
+        return this.questionRepository.findAll(pageable);
     }
 
     public void doWrite(String subject, String content, HttpSession session){
