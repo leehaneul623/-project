@@ -20,6 +20,7 @@
             </div>
 
             <!-- Q & A 테이블 -->
+<!--        <div>총 건수 : <span th:text="${question.getTotalElements}"></span></div>-->
             <table class="min-w-full table-auto text-gray-800">
                 <thead class="justify-between">
                 <tr class="bg-gray-800">
@@ -40,29 +41,24 @@
 
                 </tbody>
             </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${1 == questions.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" href="#" th:href="@{/question/list(page=${questions.pageable.pageNumber -1})}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                <li class="page-item" th:classappend="${i == questions.pageable.pageNumber + 1} ? 'disabled'" th:each="i : ${#numbers.sequence(startPage, endPage)}">
+                    <a class="page-link" href="#" th:href="@{/question/list(page=${i - 1})}" th:text="${i}">1</a>
+                </li>
+                <li class="page-item" th:classappend="${questions.totalPages == questions.pageable.pageNumber + 1} ? 'disabled'">
+                    <a class="page-link" href="#" th:href="@{/question/list(page=${questions.pageable.pageNumber +1})}">Next</a>
+                </li>
+            </ul>
+        </nav>
 
             <!-- 글쓰기 클릭메뉴 -->
-            <div class="flex w-full h-16 bg-gray-300 justify-end pr-4 items-center border-2 border-gray-300">
                 <a class="text-right">
                    <button class="btn btn-sm btn-active"  th:onclick="|location.href='/question/doWrite'|">글쓰기</button>
                 </a>
-            </div>
-
-            <!-- 페이징 -->
-            <div class="page flex w-full h-16 justify-center items-end">
-
-                <ul class="flex w-2/5 h-1/2 text-xl items-center ">
-                    <li class="flex w-1/12 border border-gray-300 justify-center flex-grow ">
-                        <a href="#"><</a>
-                    </li>
-                    <li class="flex w-1/12 border border-gray-300 justify-center flex-grow ">
-                        <a href="#">1</a>
-                    </li>
-                    <li class="flex w-1/12 border border-gray-300 justify-center flex-grow">
-                        <a href="#">></a>
-                    </li>
-                </ul>
-
             </div>
 
             <!-- 검색 -->
